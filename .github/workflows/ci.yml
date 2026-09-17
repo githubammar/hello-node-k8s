@@ -17,11 +17,29 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v5
 
+      - name: Verify repository files
+        run: |
+          echo "Current directory:"
+          pwd
+
+          echo ""
+          echo "Repository files:"
+          ls -la
+
+          echo ""
+          echo "Checking package-lock.json:"
+          ls -l package-lock.json
+
+          echo ""
+          echo "Git commit:"
+          git log -1 --oneline
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
